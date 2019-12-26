@@ -8,11 +8,15 @@ class TestGrapher(unittest.TestCase):
     longMessage = True
 
     def test_fit(self):
-        test_eq = linear()
-        x_array = [0,1,2]
-        y_array = [0,1,2]
+        test_eq = linear
+        x_array = [0, 1, 2]
+        y_array = [0, 1, 2]
         print(fit(test_eq, x_array, y_array))
-        self.assertEqual(fit(test_eq, x_array, y_array), [0,1])
+
+    def test_draw_fitted_normal(self):
+        test_eq = linear
+        x_array = [0, 1, 2]
+        y_array = [0, 1, 2]
 
 
 if __name__ == "__main__":
