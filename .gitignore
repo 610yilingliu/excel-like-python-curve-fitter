@@ -1,1 +1,4 @@
 .DS_Store
+.vscode
+./pygrapher/__pycache__
+./test/__pycache__
