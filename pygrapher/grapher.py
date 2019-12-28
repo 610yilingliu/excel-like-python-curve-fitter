@@ -6,7 +6,7 @@ import pandas as pd
 from numpy import exp, log
 
 
-def fit_draw_poly(n, x_array, y_origin, point_range, label = None, color = 'random', legend = None, show_params = False, shown_digit = 2):
+def fit_draw_poly(n, x_array, y_origin, point_range, label, color, show_params, show_digit):
     '''
     use numpy.polyfit to fit polynominal functions
     '''
@@ -18,7 +18,7 @@ def fit_draw_poly(n, x_array, y_origin, point_range, label = None, color = 'rand
 
     fitted_model = np.polyfit(x_array, y_origin, n)
     # put all variables in a regular list, and keep digit as setted
-    var_ls = [round(item, shown_digit) for item in fitted_model]
+    var_ls = [round(item, show_digit) for item in fitted_model]
     # reverse list, so the variables will start from k0
     var_ls = var_ls[::-1]
     # maximun n for x ** n
@@ -43,14 +43,9 @@ def fit_draw_poly(n, x_array, y_origin, point_range, label = None, color = 'rand
     y_np = np.polyval(fitted_model, x)
 
     if label != None:
-        plt.plot(x, y_np, label = label, color = color)
-    plt.plot(x, y_np, color = color)
-
-    if legend != None:
-        try:
-            plt.legend(loc = legend)
-        except:
-            raise Exception('Location not match, please read matplotlib.pyplot legend location for details.')
+        plt.plot(x, y_np, label = label, color = color )
+    else:
+        plt.plot(x, y_np, color = color )
 
     if show_params:                                         
         print('\n')
@@ -58,7 +53,6 @@ def fit_draw_poly(n, x_array, y_origin, point_range, label = None, color = 'rand
         df = pd.DataFrame(df)
         print(df.to_string(index=False))
     
-    plt.show()
 
     
 def fit(choosed_equation, x_array, y_origin):
@@ -70,7 +64,7 @@ def fit(choosed_equation, x_array, y_origin):
     y_origin = np.array(y_origin)
     eq = choosed_equation()
     func = eq.get_function
-    fit_model = optimize.curve_fit(func, x_array, y_origin)
+    fit_model = optimize.curve_fit(func, x_array, y_origin, maxfev= 8000)
 
     for item in fit_model[0]:
         var_ls.append(item)
@@ -78,7 +72,7 @@ def fit(choosed_equation, x_array, y_origin):
     return var_ls
 
 
-def draw_fitted_normal(choosed_equation, var_ls, point_range, label = None, color = 'random', legend = None, show_params = False, shown_digit = 2):
+def draw_fitted_normal(choosed_equation, var_ls, point_range, label, color, show_params, shown_digit):
     '''
     Use matplotlib to draw diagram
     '''
@@ -94,35 +88,34 @@ def draw_fitted_normal(choosed_equation, var_ls, point_range, label = None, colo
     # string of that equation, with values of parameters
     eq_str = ''
     for i in range(len(cutted_eq)):
-        eq_str += cutted_eq[i] + str(round(var_ls[i],shown_digit))
+        eq_str += cutted_eq[i] + str(shown_digit)
 
     x = np.arange(point_range[0], point_range[1], 0.01)
     y_np = eval(eq_str)
 
     if label != None:
         plt.plot(x, y_np, label = label, color = color )
-    plt.plot(x, y_np, color = color)
+    else:
+        plt.plot(x, y_np, color = color)
 
-    if legend != None:
-        if label == None:
-            print('Warning: Please input the name of label.')
-        try:
-            plt.legend(loc = legend)
-        except:
-            raise Exception('Location not match, please read matplotlib.pyplot legend location for details.')
-    # print(eq.get_vars())
     if show_params:
         print('\n')
-        shown_vars = [round(var) for var in var_ls]
+        shown_vars = [round(var, shown_digit) for var in var_ls]
         df = {'Parameters':eq.get_vars(),'Values': shown_vars}
         df = pd.DataFrame(df)
         print(df.to_string(index=False))
 
 
 
-def show_scatter(x_array, y_origin, color = 'rand', point_size = 20):
-        if color == 'rand':
-            color = np.random.rand(3,)
-        plt.scatter(x_array[:], y_origin[:], point_size, color)
+def show_scatter(x_array, y_origin, color, point_size, label):
+    if color == 'random':
+        color = np.random.rand(3,)
+    if label != None:
+        plt.scatter(x_array[:], y_origin[:], s = point_size, color = color, label = label)
+    else:
+        plt.scatter(x_array[:], y_origin[:], s = point_size, color = color)
+
+
+__all__ = ["fit_draw_poly", "fit", "draw_fitted_normal", "show_scatter"]
 
                                                                                                                      

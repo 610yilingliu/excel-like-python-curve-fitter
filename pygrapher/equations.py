@@ -99,3 +99,6 @@ class logarithm_with_param:
     @staticmethod
     def get_vars():
         return ['k', 'a', 'b']
+
+
+__all__ = ["linear", "exponential", "e_exponential", "e_exponential_with_param", "exponential_with_param", "logarithm", "logarithm_with_param"]
