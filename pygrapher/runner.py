@@ -11,7 +11,7 @@ def linear_fitter(x_array, y_origin, range, label = None, show_params = True, li
     range(required): x range for you to draw the graph (e.g[0, 100])
     '''
     var_ls = fit(linear, x_array, y_origin)
-    draw_fitted_normal(linear, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+    draw_fitted_normal(linear, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
     if scatter:
         show_scatter(x_array, y_origin, color = point_color, point_size = point_size, label = point_label)
     if label != None:
@@ -20,7 +20,6 @@ def linear_fitter(x_array, y_origin, range, label = None, show_params = True, li
         else:
             plt.legend(loc = 'best')
 
-    plt.show()
 
     
 def poly_fitter(n, x_array, y_origin, range, label = None, show_params = True, line_color = 'random', legend = None, scatter = True, point_color = 'random', point_size = 20, show_digit = 3, point_legend = None, point_label = None):
@@ -35,23 +34,22 @@ def poly_fitter(n, x_array, y_origin, range, label = None, show_params = True, l
         else:
             plt.legend(loc = 'best')
 
-    plt.show()
 
 def exp_fitter(x_array, y_origin, range, e_base = True, param = False, label = None, show_params = True, line_color = 'random', legend = None, scatter = True, point_color = 'random', point_size = 20, show_digit = 3, point_legend = None, point_label = None):
     if e_base:
         if param == None:
             var_ls = fit(e_exponential, x_array, y_origin)
-            draw_fitted_normal(e_exponential, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+            draw_fitted_normal(e_exponential, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
         else:
             var_ls = fit(e_exponential_with_param, x_array, y_origin)
-            draw_fitted_normal(e_exponential_with_param, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+            draw_fitted_normal(e_exponential_with_param, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
     else:
         if param == False:
             var_ls = fit(exponential, x_array, y_origin)
-            draw_fitted_normal(exponential, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+            draw_fitted_normal(exponential, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
         else:
             var_ls = fit(exponential_with_param, x_array, y_origin)
-            draw_fitted_normal(exponential_with_param, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+            draw_fitted_normal(exponential_with_param, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
 
     if scatter:
         show_scatter(x_array, y_origin, color = point_color, point_size = point_size, label = point_label)
@@ -62,19 +60,13 @@ def exp_fitter(x_array, y_origin, range, e_base = True, param = False, label = N
         else:
             plt.legend(loc = 'best')
 
-    plt.show()
 
 
 
-def log_fitter(x_array, y_origin, range, param = False, label = None, show_params = True, line_color = 'random', legend = None, scatter = True, point_color = 'random', point_size = 20, show_digit = 3, point_legend = None, point_label = None):
+def log_fitter(x_array, y_origin, range, label = None, show_params = True, line_color = 'random', legend = None, scatter = True, point_color = 'random', point_size = 20, show_digit = 3, point_legend = None, point_label = None):
     
-    if param == False:
-        var_ls = fit(logarithm, x_array, y_origin)
-        draw_fitted_normal(logarithm, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
-    
-    else:
-        var_ls = fit(logarithm_with_param, x_array, y_origin)
-        draw_fitted_normal(logarithm_with_param, var_ls, range, label= label, color = line_color, show_params = show_params, shown_digit = show_digit)
+    var_ls = fit(logarithm, x_array, y_origin)
+    draw_fitted_normal(logarithm, var_ls, range, label= label, color = line_color, show_params = show_params, show_digit = show_digit)
 
     if scatter:
         show_scatter(x_array, y_origin, color = point_color, point_size = point_size, label = point_label)
@@ -85,3 +77,5 @@ def log_fitter(x_array, y_origin, range, param = False, label = None, show_param
         else:
             plt.legend(loc = 'best')
 
+
+__all__ = ["linear_fitter", "poly_fitter", "exp_fitter", "log_fitter"]

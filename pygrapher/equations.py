@@ -1,4 +1,4 @@
-from numpy import exp, log
+from numpy import exp, log10
 
 # linear equation
 class linear:
@@ -73,32 +73,31 @@ class exponential_with_param:
     def get_vars():
         return['k', 'a', 'b']
 
-# x = log(a)N
-class logarithm:
-    func = 'log(x, a) + b'
+# class logarithm:
+#     func = 'log10(x) + b'
 
-    def get_funcstr(self):
-        return self.func
+#     def get_funcstr(self):
+#         return self.func
         
-    def get_function(self, x, a, b):
-        return eval(self.func)
+#     def get_function(self, x, a, b):
+#         return eval(self.func)
 
-    @staticmethod
-    def get_vars():
-        return ['a', 'b']
+#     @staticmethod
+#     def get_vars():
+    #         return ['a', 'b']
 
-class logarithm_with_param:
-    func = ' b + k * log(x, a)'
+class logarithm:
+    func = ' b + k * log10(x)'
 
     def get_funcstr(self):
         return self.func
     
-    def get_function(self, x, k, a, b):
+    def get_function(self, x, k, b):
         return eval(self.func)
 
     @staticmethod
     def get_vars():
-        return ['k', 'a', 'b']
+        return ['k', 'b']
 
 
-__all__ = ["linear", "exponential", "e_exponential", "e_exponential_with_param", "exponential_with_param", "logarithm", "logarithm_with_param"]
+__all__ = ["linear", "exponential", "e_exponential", "e_exponential_with_param", "exponential_with_param", "logarithm"]

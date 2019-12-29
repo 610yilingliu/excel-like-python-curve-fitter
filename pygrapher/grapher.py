@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import re
 import pandas as pd
-from numpy import exp, log
+from numpy import exp, log10
 
 
 def fit_draw_poly(n, x_array, y_origin, point_range, label, color, show_params, show_digit):
@@ -48,10 +48,10 @@ def fit_draw_poly(n, x_array, y_origin, point_range, label, color, show_params, 
         plt.plot(x, y_np, color = color )
 
     if show_params:                                         
-        print('\n')
         df = {'Parameters':var_name,'Values':var_ls}
         df = pd.DataFrame(df)
         print(df.to_string(index=False))
+        print('\n')
     
 
     
@@ -64,7 +64,7 @@ def fit(choosed_equation, x_array, y_origin):
     y_origin = np.array(y_origin)
     eq = choosed_equation()
     func = eq.get_function
-    fit_model = optimize.curve_fit(func, x_array, y_origin, maxfev= 8000)
+    fit_model = optimize.curve_fit(func, x_array, y_origin, maxfev= 10000)
 
     for item in fit_model[0]:
         var_ls.append(item)
@@ -72,7 +72,7 @@ def fit(choosed_equation, x_array, y_origin):
     return var_ls
 
 
-def draw_fitted_normal(choosed_equation, var_ls, point_range, label, color, show_params, shown_digit):
+def draw_fitted_normal(choosed_equation, var_ls, point_range, label, color, show_params, show_digit):
     '''
     Use matplotlib to draw diagram
     '''
@@ -88,7 +88,10 @@ def draw_fitted_normal(choosed_equation, var_ls, point_range, label, color, show
     # string of that equation, with values of parameters
     eq_str = ''
     for i in range(len(cutted_eq)):
-        eq_str += cutted_eq[i] + str(shown_digit)
+        try:
+            eq_str += cutted_eq[i] + str(var_ls[i])
+        except:
+            eq_str += cutted_eq[i]
 
     x = np.arange(point_range[0], point_range[1], 0.01)
     y_np = eval(eq_str)
@@ -99,11 +102,11 @@ def draw_fitted_normal(choosed_equation, var_ls, point_range, label, color, show
         plt.plot(x, y_np, color = color)
 
     if show_params:
-        print('\n')
-        shown_vars = [round(var, shown_digit) for var in var_ls]
+        shown_vars = [round(var, show_digit) for var in var_ls]
         df = {'Parameters':eq.get_vars(),'Values': shown_vars}
         df = pd.DataFrame(df)
         print(df.to_string(index=False))
+        print('\n')
 
 
 
