@@ -73,6 +73,18 @@ class exponential_with_param:
     def get_vars():
         return['k', 'a', 'b']
 
+# class logarithm:
+#     func = 'log10(x) + b'
+
+#     def get_funcstr(self):
+#         return self.func
+        
+#     def get_function(self, x, a, b):
+#         return eval(self.func)
+
+#     @staticmethod
+#     def get_vars():
+    #         return ['a', 'b']
 
 class logarithm:
     func = ' b + k * log10(x)'
